@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.Navbar {
+  @apply mt-2 hover:bg-blue-300 cursor-pointer p-4 rounded-md;
+}

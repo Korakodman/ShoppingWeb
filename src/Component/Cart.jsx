@@ -1,11 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
+import { AppContext } from "../Context/Context";
 
 function Cart() {
   const [search, setSearch] = useState("");
   const [items, setItems] = useState([]); // สร้าง state สำหรับเก็บข้อมูลสินค้า
   const [loading, setLoading] = useState(true); // สถานะการโหลดข้อมูล
+  const { Cartcount, SetCartcount } = useContext(AppContext);
+  const dialog = useRef();
+  const [image, SetImage] = useState();
 
+  const CloseModal = () => {
+    dialog.current.close();
+  };
+  const Clickclose = (e) => {
+    if (e.target === dialog.current) {
+      CloseModal();
+    }
+  };
+  const AddCartForm = (e) => {
+    e.preventDefault();
+  };
+  const AddCart = () => {
+    SetCartcount((prev) => parseInt(prev) + 1);
+    CloseModal();
+  };
   // ดึงข้อมูลจาก API
   useEffect(() => {
     axios("https://fakestoreapi.com/products?limit=20")
@@ -23,7 +42,10 @@ function Cart() {
   const filteredPictures = items.filter((item) =>
     item.title.toLowerCase().includes(search.toLowerCase())
   );
-
+  const Modal = (item) => {
+    dialog.current.showModal();
+    SetImage(item.image);
+  };
   return (
     <>
       {/* แบบฟอร์มค้นหา */}
@@ -41,19 +63,19 @@ function Cart() {
       </div>
 
       {/* แสดงสถานะการโหลด */}
-      {loading && <p>Loading...</p>}
+      {loading && <p className=" text-2xl mt-10">Loading...</p>}
 
       {/* แสดงรายการสินค้าหลังจากกรอง */}
       {!loading &&
         filteredPictures.map((item) => (
           <div
             key={item.id}
-            className="image border-2 w-[300px] h-[360px] mx-2 mt-4 shadow-md bg-gray-200 p-2 "
+            className="image border-2 w-[200px] h-[360px] mx-2 mt-4 shadow-md bg-gray-200 p-2 "
           >
             <img
               src={item.image}
               alt={item.title}
-              className="w-full h-[200px] object-fill mt-4"
+              className="w-full h-[170px] object-fill mt-4 cursor-pointer"
             />
             <div className="p-2">
               <div className="flex px-2 py-4 content-center">
@@ -68,11 +90,33 @@ function Cart() {
                 <button
                   type="button"
                   className="bg-orange-300 p-2 w-[100%] hover:bg-orange-500 shadow-md"
+                  onClick={() => Modal(item)}
                 >
                   Click More Info
                 </button>
               </div>
             </div>
+            <dialog
+              ref={dialog}
+              onClick={Clickclose}
+              className=" w-[500px] h-[250px] p-3 rounded-md"
+            >
+              <form action="" onSubmit={AddCartForm} className=" grid">
+                <h2>Name :</h2>
+                <img
+                  src={image}
+                  className=" w-[125px] h-[150px] border-2"
+                ></img>
+                <div className=" text-end ">
+                  <button
+                    className=" bg-blue-300 p-2 font-semibold"
+                    onClick={AddCart}
+                  >
+                    Add To Cart
+                  </button>
+                </div>
+              </form>
+            </dialog>
           </div>
         ))}
 

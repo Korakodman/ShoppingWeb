@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../Context/Context";
 
 function Header() {
-  const [menu, setMenu] = useState(["Shopping", "About", "Amount", "Cart"]);
+  const { Cartcount, SetCartcount } = useContext(AppContext);
+
   return (
-    <header className="grid mr-auto font-semibold border-2 p-2 shadow-md text-3xl">
-      <div className="p-4 md:max-xl:p-2 ">Home</div>
+    <header className="flex mr-auto font-semibold border-2 p-2 shadow-md text-2xl items-center justify-between">
+      <div className="p-2 ml-10">
+        <h2 className="cursor-pointer">Home</h2>
+      </div>
+
       <div>
-        <ul className="">
-          {menu.map((item, i) => (
-            <li className="mt-2 hover:bg-blue-300 p-4 rounded-md" key={i}>
-              {item}
-            </li>
-          ))}
+        <ul className="flex gap-x-2">
+          <li className="Navbar">Your Account</li>
+          <li className="Navbar">Cart {Cartcount}</li>
         </ul>
       </div>
     </header>
