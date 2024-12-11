@@ -2,6 +2,15 @@ import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 const Dialog = forwardRef(
   ({ Clickclose, AddCart, AddCartForm, Name, Price, image }, ref) => {
+    const convertToBaht = (usd) => {
+      const exchangeRate = 35; // อัตราแลกเปลี่ยน (USD -> THB)
+      const baht = usd * exchangeRate;
+      return new Intl.NumberFormat("th-TH", {
+        style: "currency",
+        currency: "THB",
+      }).format(baht);
+    };
+
     return (
       <dialog
         ref={ref}
@@ -19,7 +28,8 @@ const Dialog = forwardRef(
             <div className=" p-2">
               <header className=" font-extralight text-3xl">{Name}</header>
               <p className=" font-semibold text-2xl mt-2 text-end">
-                Price : <span className=" text-red-500">{Price} </span>
+                Price :{" "}
+                <span className=" text-red-500">{convertToBaht(Price)} </span>
                 Bath
               </p>
             </div>
@@ -39,11 +49,11 @@ const Dialog = forwardRef(
 );
 Dialog.displayName = "Dialog";
 Dialog.propTypes = {
-  Clickclose: PropTypes.func.isRequired,
-  AddCart: PropTypes.func.isRequired,
-  AddCartForm: PropTypes.func.isRequired,
-  Name: PropTypes.string.isRequired,
-  Price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  image: PropTypes.string.isRequired,
+  Clickclose: PropTypes.func,
+  AddCart: PropTypes.func,
+  AddCartForm: PropTypes.func,
+  Name: PropTypes.string,
+  Price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  image: PropTypes.string,
 };
 export default Dialog;

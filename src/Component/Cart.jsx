@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import { AppContext } from "../Context/Context";
 import Dialog from "./Dialog";
@@ -8,6 +8,10 @@ function Cart() {
   const [items, setItems] = useState([]); // สร้าง state สำหรับเก็บข้อมูลสินค้า
   const [loading, setLoading] = useState(true); // สถานะการโหลดข้อมูล
   const { Cartcount, SetCartcount } = useContext(AppContext);
+  const { itemTotal, SetitemTotal } = useContext(AppContext);
+  const { Select, SetSeletct } = useContext(AppContext);
+  const [selectedItem, SetSelectedItem] = useState(null);
+
   const dialog = useRef();
   const [image, SetImage] = useState();
   const [Name, SetName] = useState();
@@ -24,8 +28,10 @@ function Cart() {
   const AddCartForm = (e) => {
     e.preventDefault();
   };
-  const AddCart = () => {
-    SetCartcount((prev) => parseInt(prev) + 1);
+  const AddCart = (item) => {
+    SetitemTotal((prevTotal) => prevTotal + item.price);
+    SetCartcount((prevcount) => prevcount + 1);
+    SetSeletct((prevSelect) => [...prevSelect, item]);
     CloseModal();
   };
   // ดึงข้อมูลจาก API
@@ -50,7 +56,17 @@ function Cart() {
     SetImage(item.image);
     SetName(item.title);
     SetPrice(item.price);
+    SetSelectedItem(item);
   };
+  const convertToBaht = (usd) => {
+    const exchangeRate = 35; // อัตราแลกเปลี่ยน (USD -> THB)
+    const baht = usd * exchangeRate;
+    return new Intl.NumberFormat("th-TH", {
+      style: "currency",
+      currency: "THB",
+    }).format(baht);
+  };
+
   return (
     <>
       {/* แบบฟอร์มค้นหา */}
@@ -87,8 +103,8 @@ function Cart() {
                 <h2 className="text-xl text-ellipsis overflow-hidden whitespace-nowrap">
                   {item.title}
                 </h2>
-                <h4 className="text-lg flex ml-5 text-blue-400">
-                  ${item.price}
+                <h4 className="text-base flex ml-5 text-blue-400">
+                  {convertToBaht(item.price)}
                 </h4>
               </div>
               <div>
@@ -108,7 +124,7 @@ function Cart() {
               image={image}
               Name={Name}
               Price={Price}
-              AddCart={AddCart}
+              AddCart={() => AddCart(selectedItem)}
             />
           </div>
         ))}
