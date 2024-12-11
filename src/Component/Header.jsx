@@ -7,7 +7,7 @@ function Header() {
   return (
     <header className="flex mr-auto font-semibold border-2 p-2 shadow-md text-2xl items-center justify-between">
       <div className="p-2 ml-10">
-        <h2 className="cursor-pointer">Home</h2>
+        <h2 className="cursor-pointer">Home test</h2>
       </div>
 
       <div>
