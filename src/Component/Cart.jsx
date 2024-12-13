@@ -5,11 +5,11 @@ import Dialog from "./Dialog";
 
 function Cart() {
   const [search, setSearch] = useState("");
-  const [items, setItems] = useState([]); // สร้าง state สำหรับเก็บข้อมูลสินค้า
+  const { items, setItems } = useContext(AppContext); // สร้าง state สำหรับเก็บข้อมูลสินค้า
   const [loading, setLoading] = useState(true); // สถานะการโหลดข้อมูล
   const { Cartcount, SetCartcount } = useContext(AppContext);
   const { itemTotal, SetitemTotal } = useContext(AppContext);
-  const { Select, SetSeletct } = useContext(AppContext);
+  const { Select, SetSelect } = useContext(AppContext);
   const [selectedItem, SetSelectedItem] = useState(null);
 
   const dialog = useRef();
@@ -31,7 +31,7 @@ function Cart() {
   const AddCart = (item) => {
     SetitemTotal((prevTotal) => prevTotal + item.price);
     SetCartcount((prevcount) => prevcount + 1);
-    SetSeletct((prevSelect) => [...prevSelect, item]);
+    SetSelect((prevSelect) => [...prevSelect, item]);
     CloseModal();
   };
   // ดึงข้อมูลจาก API
