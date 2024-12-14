@@ -32,9 +32,13 @@ function Header() {
   let emptyCart = "ไม่มีสินค้าในตะกร้า กรุณาเลือกซื้อสินค้า";
   const DeleteButton = (itemToDelete) => {
     if (!itemToDelete) return;
-
+    const itemIndex = Select.findIndex((item) => item.id === itemToDelete.id);
+    if (itemIndex === -1) {
+      return;
+    }
     // ลบสินค้าที่เลือกออกจาก Select
-    const updatedItems = Select.filter((item) => item !== itemToDelete);
+    const updatedItems = [...Select];
+    updatedItems.splice(itemIndex, 1);
     SetSelect(updatedItems);
 
     // อัปเดตจำนวนสินค้าและราคารวม
