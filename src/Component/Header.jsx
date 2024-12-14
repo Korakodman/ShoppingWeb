@@ -63,9 +63,9 @@ function Header() {
           onClick={Clickclose}
         >
           <div className="p-2">
-            Total : {Cartcount}
+            สินค้าทั้งหมด : {Cartcount}
             <br></br>
-            Amount : {convertToBaht(itemTotal)} Bath
+            ราคารวม : {convertToBaht(itemTotal)} บาท
             <div className=" text-red-500"> {Cartcount ? "" : emptyCart}</div>
           </div>
 
@@ -82,16 +82,16 @@ function Header() {
                       <p className=" overflow-hidden whitespace-nowrap  text-ellipsis w-[250px] ">
                         {item.title}
                       </p>
-                      <p>{convertToBaht(item.price)} Bath</p>
+                      <p>{convertToBaht(item.price)} บาท</p>
                     </div>
                   </div>
 
                   <div className="">
                     <button
                       onClick={() => DeleteButton(item)}
-                      className=" text-lg  bg-red-200 hover:bg-red-500 mt-16 p-2 mr-2 rounded-md"
+                      className=" text-lg  bg-red-200 hover:bg-red-500 mt-16 px-4 py-2 mr-2 rounded-md"
                     >
-                      Delete
+                      ลบ
                     </button>
                   </div>
                 </div>

@@ -52,11 +52,16 @@ function Cart() {
     item.title.toLowerCase().includes(search.toLowerCase())
   );
   const Modal = (item) => {
-    dialog.current.showModal();
-    SetImage(item.image);
-    SetName(item.title);
-    SetPrice(item.price);
-    SetSelectedItem(item);
+    if (dialog.current) {
+      dialog.current.showModal();
+
+      SetImage(item.image);
+      SetName(item.title);
+      SetPrice(item.price);
+      SetSelectedItem(item);
+    } else {
+      console.error();
+    }
   };
   const convertToBaht = (usd) => {
     const exchangeRate = 35; // อัตราแลกเปลี่ยน (USD -> THB)
@@ -72,11 +77,11 @@ function Cart() {
       {/* แบบฟอร์มค้นหา */}
       <div className="container flex justify-center mt-4">
         <form>
-          <label className="p-2 font-semibold text-2xl">Search</label>
+          <label className="p-2 font-semibold text-2xl">ค้นหา</label>
           <input
             type="search"
             className="border border-2 focus:outline-none px-2 py-3 w-[300px] text-lg"
-            placeholder="Search Something You Want"
+            placeholder="ค้นหาสินค้า"
             value={search}
             onChange={(e) => setSearch(e.target.value)} // อัปเดตค่า search
           />
@@ -99,12 +104,12 @@ function Cart() {
               className="w-full h-[170px] object-fill mt-4 cursor-pointer"
             />
             <div className="p-2">
-              <div className="flex px-2 py-4 content-center">
+              <div className=" grid px-2 py-4 content-center">
                 <h2 className="text-xl text-ellipsis overflow-hidden whitespace-nowrap">
                   {item.title}
                 </h2>
-                <h4 className="text-base flex ml-5 text-blue-400">
-                  {convertToBaht(item.price)}
+                <h4 className="text-base flex mt-1 text-blue-400">
+                  {convertToBaht(item.price)} บาท
                 </h4>
               </div>
               <div>
@@ -113,24 +118,25 @@ function Cart() {
                   className="bg-orange-300 p-2 w-[100%] hover:bg-orange-500 shadow-md"
                   onClick={() => Modal(item)}
                 >
-                  Click More Info
+                  ดูข้อมูลเพิ่มเติม
                 </button>
               </div>
             </div>
-            <Dialog
-              ref={dialog}
-              Clickclose={Clickclose}
-              AddCartForm={AddCartForm}
-              image={image}
-              Name={Name}
-              Price={Price}
-              AddCart={() => AddCart(selectedItem)}
-            />
           </div>
         ))}
-
+      <Dialog
+        ref={dialog}
+        Clickclose={Clickclose}
+        AddCartForm={AddCartForm}
+        image={image}
+        Name={Name}
+        Price={Price}
+        AddCart={() => AddCart(selectedItem)}
+      />
       {/* แสดงข้อความหากไม่มีสินค้าตรงกับคำค้นหา */}
-      {!loading && filteredPictures.length === 0 && <p>No items found.</p>}
+      {!loading && filteredPictures.length === 0 && (
+        <p className=" text-xl mt-2">ไม่มีสินค้าที่คุณต้องการ</p>
+      )}
     </>
   );
 }
