@@ -47,12 +47,12 @@ function Header() {
   };
   return (
     <header className=" top-0 sticky flex mr-auto font-semibold border-2 p-4 shadow-md text-2xl items-center justify-between bg-[#50ADBF]">
-      <div className="p-2 ml-10">
+      <div className="p-2 md:ml-10 ml-0">
         <h2 className="cursor-pointer">Home</h2>
       </div>
 
       <div>
-        <ul className="flex gap-x-2">
+        <ul className="flex gap-x-2 text-2xl ">
           <li className="Navbar">Your Account</li>
           <button
             className="Navbar justify-center flex "
@@ -62,11 +62,11 @@ function Header() {
           </button>
         </ul>
         <dialog
-          className=" w-fit h-fit p-4 rounded-md"
+          className=" md:w-fit md:h-fit  w-[420px]  p-4 rounded-md"
           ref={dialogTotal}
           onClick={Clickclose}
         >
-          <div className="p-2">
+          <div className="p-2 text-lg">
             สินค้าทั้งหมด : {Cartcount}
             <br></br>
             ราคารวม : {convertToBaht(itemTotal)} บาท
@@ -76,24 +76,29 @@ function Header() {
           <div>
             {Select.map((item, index) => {
               return (
-                <div key={index} className=" flex border border-black m-2">
+                <div
+                  key={index}
+                  className=" md:flex grid border border-black m-2"
+                >
                   <div className="flex">
                     <img
                       src={item.image}
-                      className=" w-[125px] h-[125px] p-2"
+                      className=" md:w-[125px] md:h-[125px] w-[100px] h-[100px] p-2"
                     ></img>
                     <div className="p-2">
-                      <p className=" overflow-hidden whitespace-nowrap  text-ellipsis w-[250px] ">
+                      <p className=" overflow-hidden whitespace-nowrap   text-ellipsis  md:w-[250px] w-[150px] text-base md:text-lg">
                         {item.title}
                       </p>
-                      <p>{convertToBaht(item.price)} บาท</p>
+                      <p className="text-xl md:text-xl">
+                        {convertToBaht(item.price)} บาท
+                      </p>
                     </div>
                   </div>
 
-                  <div className="">
+                  <div className="flex justify-end">
                     <button
                       onClick={() => DeleteButton(item)}
-                      className=" text-lg  bg-red-200 hover:bg-red-500 mt-16 px-4 py-2 mr-2 rounded-md"
+                      className=" text-lg  bg-red-200 hover:bg-red-500 md:mt-16 mt-0 mr-2 px-4 mb-2 py-2 md:mr-2 rounded-md"
                     >
                       ลบ
                     </button>
