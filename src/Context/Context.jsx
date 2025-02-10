@@ -25,7 +25,7 @@ const Context = () => {
     >
       <Header />
       <main className="flex justify-center">
-        <div className="flex justify-center flex-wrap w-[1280px] h-full border-2 rounded-md border-black m-10 p-4">
+        <div className="grid justify-center flex-wrap  md:w-[1280px] h-full border-2 rounded-md border-black md:m-10 m-2 md:p-4 p-2">
           <Cart />
         </div>
       </main>

@@ -15,25 +15,29 @@ const Dialog = forwardRef(
       <dialog
         ref={ref}
         onClick={Clickclose}
-        className=" w-[750px] h-fit p-3 rounded-md  "
+        className=" md:w-[750px] h-fit p-3 rounded-md  "
       >
-        <form action="" onSubmit={AddCartForm} className=" items-center flex">
-          <div>
+        <form
+          action=""
+          onSubmit={AddCartForm}
+          className=" items-center md:flex"
+        >
+          <div className="flex justify-center">
             <img
               src={image}
-              className=" w-[250px] h-[250px] border-2 object-fill rounded-md"
+              className=" md:w-[250px] md:h-[250px] w-[100px] border-2 object-fill rounded-md"
             ></img>
           </div>
-          <div className="p-2 border-black border-4 w-[500px] m-4 grid rounded-md">
+          <div className="p-2 border-black border-4 md:w-[500px]  m-4 grid rounded-md">
             <div className=" p-2">
-              <header className=" font-extralight text-3xl">{Name}</header>
-              <p className=" font-semibold text-2xl mt-2 text-end">
+              <header className=" font-extralight md:text-3xl">{Name}</header>
+              <p className=" font-semibold md:text-2xl mt-2 text-end">
                 Price :{" "}
                 <span className=" text-red-500">{convertToBaht(Price)} </span>
                 Bath
               </p>
             </div>
-            <div className=" text-end mt-2 text-xl">
+            <div className=" text-end mt-2 md:text-xl">
               <button
                 className=" bg-blue-300 p-2 font-semibold hover:bg-blue-500 rounded-sm"
                 onClick={AddCart}

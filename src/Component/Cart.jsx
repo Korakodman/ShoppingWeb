@@ -75,55 +75,59 @@ function Cart() {
   return (
     <>
       {/* แบบฟอร์มค้นหา */}
-      <div className="container flex justify-center mt-4">
-        <form>
-          <label className="p-2 font-semibold text-2xl">ค้นหา</label>
-          <input
-            type="search"
-            className="border border-2 focus:outline-none px-2 py-3 w-[300px] text-lg"
-            placeholder="ค้นหาสินค้า"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)} // อัปเดตค่า search
-          />
-        </form>
+      <div>
+        <div className="container flex justify-center mt-4">
+          <form>
+            <label className="p-2 font-semibold text-2xl">ค้นหา</label>
+            <input
+              type="search"
+              className="border border-2 focus:outline-none px-2 py-3 md:w-[300px] text-lg"
+              placeholder="ค้นหาสินค้า"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)} // อัปเดตค่า search
+            />
+          </form>
+        </div>
       </div>
 
       {/* แสดงสถานะการโหลด */}
       {loading && <p className=" text-2xl mt-10">Loading...</p>}
 
       {/* แสดงรายการสินค้าหลังจากกรอง */}
-      {!loading &&
-        filteredPictures.map((item) => (
-          <div
-            key={item.id}
-            className="image border-2 w-[200px] h-[360px] mx-2 mt-4 shadow-md bg-gray-200 p-2 "
-          >
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-[170px] object-fill mt-4 cursor-pointer"
-            />
-            <div className="p-2">
-              <div className=" grid px-2 py-4 content-center">
-                <h2 className="text-xl text-ellipsis overflow-hidden whitespace-nowrap">
-                  {item.title}
-                </h2>
-                <h4 className="text-base flex mt-1 text-blue-400">
-                  {convertToBaht(item.price)} บาท
-                </h4>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  className="bg-orange-300 p-2 w-[100%] hover:bg-orange-500 shadow-md"
-                  onClick={() => Modal(item)}
-                >
-                  ดูข้อมูลเพิ่มเติม
-                </button>
+      <div className=" grid grid-cols-3 md:flex justify-center flex-wrap">
+        {!loading &&
+          filteredPictures.map((item) => (
+            <div
+              key={item.id}
+              className="image border-2 md:w-[200px] md:h-[360px] w-[100px]  mx-2 mt-4 shadow-md bg-gray-200 md:p-2 p-1 "
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="md:w-full md:h-[170px] w-[80px] h-[80px] object-fill mt-4 cursor-pointer"
+              />
+              <div className="p-2">
+                <div className=" grid px-2 py-4 content-center">
+                  <h2 className="md:text-xl text-ellipsis overflow-hidden whitespace-nowrap">
+                    {item.title}
+                  </h2>
+                  <h4 className="md:text-base text-xs flex mt-1 text-blue-400">
+                    {convertToBaht(item.price)} บาท
+                  </h4>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="bg-orange-300 p-2 md:w-[100%] w-[80px] text-sm hover:bg-orange-500 shadow-md"
+                    onClick={() => Modal(item)}
+                  >
+                    ดูข้อมูลเพิ่มเติม
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
       <Dialog
         ref={dialog}
         Clickclose={Clickclose}
